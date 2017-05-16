@@ -1,6 +1,6 @@
-name: Lucian Marin
-description: Information Architect
-url: http://iamlucian.ro
+name: Romain Calascibetta
+description: Un autre blog
+url: http://dinosaure.github.io/
 
 relative_permalinks: false
 permalink: :title.html
