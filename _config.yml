@@ -5,5 +5,5 @@ url: http://dinosaure.github.io/
 relative_permalinks: false
 permalink: :title.html
 
-exclude: [readme.md]
+exclude: [.hyde.el]
 incremental: true
