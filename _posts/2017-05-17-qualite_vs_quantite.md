@@ -2,6 +2,7 @@
 layout: post
 title: "Qualité vs. Quantité"
 author: Romain Calascibetta
+date: 2017-05-17 05:56:58
 ---
 
 Si on ignore mon LinkedIn, où mes compétences sont plus révélateur d'un
