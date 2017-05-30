@@ -6,13 +6,13 @@ category: blog
 slug:     sirodepac
 ---
 
-Voilà un petit moment (4 mois) que je travaille en ce moment sur
-l'implémentation à la sérialisation et la déserialisation d'un fichier PACK
-(fichier central au logiciel `git`).
+Voilà un petit moment (4 mois) que je travaille sur l'implémentation à la
+sérialisation et la déserialisation d'un fichier PACK (fichier central au
+logiciel `git`).
 
 J'ai vachement appris sur la structure de `git` et surtout sa puissance. En
 effet, `git` est notamment en capacité de gérer des gros fichiers sans pour
-autant que vous ayez besoin d'investir dans des disques durs. C'est notamment en
+autant que vous ayez besoin d'investir dans des barrettes. C'est notamment en
 lien avec une architecture du traitement de l'information particulière qui prime
 toujours le stockage dans le système de fichiers plutôt que la mémoire.
 
@@ -20,9 +20,9 @@ toujours le stockage dans le système de fichiers plutôt que la mémoire.
 
 En réalité `git` s'articule avec l'idée simple qu'il n'est pas possible de
 stocker vos objets `git` en mémoire. Ainsi, dès que vous manipulez un objet,
-`git` va le traiter le traiter dans un flux (qu'il enverra ensuite dans la
-sortie standard petit à petit) et techniquement parlant, c'est `less` qui montre
-le résultat en lisant depuis l'entrée standard.
+`git` va le traiter dans un flux (qu'il enverra ensuite dans la sortie standard
+petit à petit) et techniquement parlant, c'est `less` qui montre le résultat en
+lisant depuis l'entrée standard.
 
 Ainsi, seule une représentation très succincte (correspondant aux *metadata* de
 vos objets `git`) est représenté en mémoire. Le contenu (notamment celui de vos
@@ -55,13 +55,13 @@ consiste à contenir nos grosses valeurs *caml*.
 
 Il faut cependant comprendre un comportement d'OCaml qui consiste à promouvoir
 une valeur *caml* de la première génération à la deuxième. Ceci arrive souvent
-lorsqu'on utilise `mutable` (ainsi, les effets de bords). Ainsi, si une valeur
+lorsqu'on utilise `mutable` (ainsi, les effets de bords). Donc, si une valeur
 `mutable` dure longtemps en OCaml, elle peut être promu à la deuxième
 génération.
 
 Et dans notre contexte, il faut absolument éviter ça puisqu'en étant majoré à la
 deuxième génération, la valeur restera alloué plus longtemps (et pourrait même
-continuer à exister longtemps même si on ne l'utilise plus).
+continuer à exister même si on ne l'utilise plus).
 
 En ce sens, __toutes__ les valeurs OCaml utiles au traitement doivent être
 localisées dans la première génération pour assurer une choses essentielle, à ce
@@ -71,7 +71,7 @@ ne pas utiliser `mutable`.
 
 Il est préférable donc dans le contexte d'OCaml d'utiliser des données immuables
 même si elles doivent être (pour se *modifier*) allouer fréquemment. Mais pour
-le coup, l'allocation dans le tas mineur correspond à 3 instructions processus.
+le coup, l'allocation dans le tas mineur correspond à 3 instructions processeur.
 Le *deal* est donc bon.
 
 ## L'impact
@@ -86,7 +86,7 @@ nécessaire avec une taille fixe que l'on peut jauger selon le contexte
 d'utilisation.
 
 Ce travail n'est pourtant pas si simple, il s'agit de jouer entre les états sur
-des *buffers* donc le contenu est très volatile et sur lesquelles une erreur
+des *buffers* dont le contenu est très volatile et sur lesquelles une erreur
 peut tout simplement nous faire perdre les données. Il s'agit donc d'être très
 minutieux sur le traitement de ces *buffers* et savoir quand il est légitime de
 les réutiliser (et donc écraser les données).
@@ -103,7 +103,7 @@ fichier PACK (qu'on obtient avec un `git gc` et qui se trouve dans
 
 Pour ce qui est de la compression, je ferais un autre article qui décrit
 précisément le point - car vous pouvez le constater, mon logiciel parvient à
-être presque aussi efficace que `git`!
+être presque aussi efficace que `git` !
 
 
 <!--  LocalWords:  l'implémentation sérialisation déserialisation
